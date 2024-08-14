@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Samuzero15/react-tutorial/issues"
   },
-  "homepage": "https://github.com/Samuzero15/react-tutorial#readme"
+  "homepage": "https://github.com/Samuzero15/react-tutorial#readme",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
 }

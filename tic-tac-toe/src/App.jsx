@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,6 +9,7 @@ import { WinnerModal } from './components/WinnerModal.jsx'
 import { Turn } from './components/Turn.jsx'
 import { Board } from './components/Board.jsx'
 import { quienGano, juegoTrancado } from './logic/logic.js'
+import { guardarJuego, reiniciarJuego } from './logic/storage.js'
 
 function App() {
   const [tablero, setTablero] = useState(()=>{
@@ -27,8 +28,7 @@ function App() {
     setTablero(Array(9).fill(null))
     setTurno(TURNOS.X)
     setGanador(null)
-    window.localStorage.removeItem("tablero");
-    window.localStorage.removeItem("turno");
+    reiniciarJuego();
   }
 
   const updateBoard = (index) => {
@@ -39,13 +39,16 @@ function App() {
     tableroNuevo[index] = turno
     setTablero(tableroNuevo)
 
+    
     // Siguiente turno.
     const nuevoTurno = turno == TURNOS.X ? TURNOS.O : TURNOS.X
     setTurno(nuevoTurno)
 
-    // Guardar el juego
-    window.localStorage.setItem("tablero", JSON.stringify(tableroNuevo))
-    window.localStorage.setItem("turno",   nuevoTurno)
+    // Guardar juego 
+    guardarJuego({
+      tablero: tableroNuevo,
+      turno: nuevoTurno
+    })
 
     // Revisar si hay un ganador.
     const nuevoGanador = quienGano(turno, tableroNuevo, ganador)
@@ -56,6 +59,10 @@ function App() {
       setGanador(false)
     }
   }
+
+  // Guardar el juego cada vez que turno o tablero cambie
+  // Como la arquitectura de Pub Sub.
+
 
   return (
     <main className='board'>

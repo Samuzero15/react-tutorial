@@ -1,7 +1,7 @@
 
 export const TURNOS = {
-    X: 'x',
-    O: 'o'
+    X: '❌',
+    O: '🔘'
   }
   
 export const LINEAS = {
