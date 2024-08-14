@@ -2,7 +2,6 @@ import { LINEAS } from "./constants";
 
 export function quienGano(turno, tableroNuevo, ganador) {
     if(ganador) return;
-    var victoria = true;
     var lineas = Array(8).fill(true);
     for(var i = 0; i < 3; i++){
       lineas[LINEAS.HORI1] = tableroNuevo[i] != turno ? false : lineas[LINEAS.HORI1];
